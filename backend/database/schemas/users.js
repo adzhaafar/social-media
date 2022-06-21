@@ -1,2 +1,13 @@
-// schemas for users, posts etc
+const mongoose = require("mongoose");
 
+
+const userSchema = new mongoose.Schema({
+    email: String, 
+    fullname: String,
+    username: String,
+    password: String
+});
+
+
+
+module.exports = mongoose.model('User', userSchema);

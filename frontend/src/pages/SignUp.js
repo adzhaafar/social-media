@@ -1,36 +1,33 @@
 import { React, useState } from 'react';
+import axios from "axios";
 
 function SignUp() {
     const [email, setEmail] = useState("");
     const [fullName, setFullName] = useState("");
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+
+    // if account already exists, username is taken, email is invalid, one of the fields is not filled in.
     const [error, setError] = useState("");
 
+
+
+    async function createAccount(event) {
+        event.preventDefault();
+        try {
+            const response = await axios.post("http://localhost:3002/createUser", {
+                email: email, 
+                fullname: fullName, 
+                username: username, 
+                password: password
+            });
+        } catch (error) {
+            console.error(error);
+        }
+        
     
-    
-
-    // function createAccount(e) {
-    //     const requestOptions = {
-
-    //         method: "POST",
-    //         headers: {
-    //             "Content-Type": "application/json"
-    //         },
-    //         body: JSON.stringify({
-    //             firstName: firstName,
-
-    //         })
-    //     }
-    //     fetch("/createUser", requestOptions)
-    //         .then(res => { return res.json() })
-    //         .then((data) => console.log(data))
-    //         .catch(err => console.error(err));
-    // }
-
-    const createAccount = () => {
-        console.log(submitted)
     }
+
     
     const updateEmail = (event) => {
         setEmail(event.target.value);
@@ -51,6 +48,7 @@ function SignUp() {
     return (
         <form onSubmit={createAccount}>
             <input 
+            autoComplete="off"
             placeholder="Email" 
             type="email" 
             value={email}
@@ -58,6 +56,7 @@ function SignUp() {
             onChange={updateEmail}></input>
             
             <input
+                autoComplete="off"
                 placeholder="Full Name"
                 type="text"
                 value={fullName}
@@ -65,6 +64,7 @@ function SignUp() {
                 onChange={updateFullName}></input>
             
             <input
+                autoComplete="off"
                 placeholder="Username"
                 type="text"
                 value={username}
@@ -72,11 +72,12 @@ function SignUp() {
                 onChange={updateUsername}></input>
             
             <input
+                autoComplete="off"
                 placeholder="Password"
                 type="password"
                 value={password}
                 name="username"
-                onChange={password}></input>
+                onChange={updatePassword}></input>
             
             <button>Sign up</button>
         </form>
@@ -84,4 +85,4 @@ function SignUp() {
   )
 }
 
-export default SignUp
+export default SignUp;
